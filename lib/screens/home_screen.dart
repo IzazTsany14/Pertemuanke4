@@ -305,25 +305,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ),
 
-          // Daftar menu dengan SliverGrid
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 250,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                childAspectRatio: 0.7,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
+          // Ganti SliverGrid dengan SliverToBoxAdapter yang berisi ListView.builder
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: filteredItems.length,
+                itemBuilder: (context, index) {
                   final item = filteredItems[index];
-                  return MenuCard(
-                    item: item,
-                    onAddToCart: () => addToCart(item),
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: MenuCard(
+                      item: item,
+                      onAddToCart: () => addToCart(item),
+                    ),
                   );
                 },
-                childCount: filteredItems.length,
               ),
             ),
           ),
